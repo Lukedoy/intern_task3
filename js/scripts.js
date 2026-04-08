@@ -1,8 +1,10 @@
 /*!
-    * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-agency/blob/master/LICENSE)
-    */
-    (function ($) {
-    "use strict"; // Start of use strict
+ * Bhone's Portfolio - Custom JavaScript
+ * Built on Start Bootstrap - Agency theme
+ * Licensed under MIT
+ */
+(function ($) {
+    "use strict";
 
     // Smooth scrolling using jQuery easing
     $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
@@ -51,4 +53,31 @@
     navbarCollapse();
     // Collapse the navbar when page is scrolled
     $(window).scroll(navbarCollapse);
-})(jQuery); // End of use strict
+
+    // Animate skill bars when they come into view
+    var skillsAnimated = false;
+    $(window).on("scroll", function () {
+        var skillsSection = $("#skills");
+        if (skillsSection.length && !skillsAnimated) {
+            var sectionTop = skillsSection.offset().top - $(window).height() + 200;
+            if ($(window).scrollTop() > sectionTop) {
+                $(".progress-bar").each(function () {
+                    var width = $(this).attr("aria-valuenow") + "%";
+                    $(this).css("width", "0%").animate({ width: width }, 1500);
+                });
+                skillsAnimated = true;
+            }
+        }
+    });
+
+    // Add fade-in effect for favourites cards
+    $(window).on("scroll", function () {
+        $(".favourites-card").each(function () {
+            var cardTop = $(this).offset().top - $(window).height() + 100;
+            if ($(window).scrollTop() > cardTop) {
+                $(this).addClass("visible");
+            }
+        });
+    });
+
+})(jQuery);
